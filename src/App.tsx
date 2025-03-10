@@ -1,11 +1,14 @@
-import MenuBar from './components/menu/MenuBar'
-import './index.css'
+import { useState } from 'react'
 
 function App() {
 
+
   return (
     <>
-      <div className="bg-red-500 text-white p-4">Tailwind funciona 🚀</div>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <h1 className="text-4xl font-bold text-blue-600">¡Tailwind funciona! 🚀</h1>
+        <p className="text-lg text-gray-700">Si ves este texto con estilos, Tailwind está bien configurado.</p>
+      </div>
     </>
   )
 }
