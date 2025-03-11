@@ -8,9 +8,9 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     return (
-        <div className="w-full h-screen flex flex-col bg-gray-100">
+        <div className="w-full h-screen flex flex-col bg-gray-100 overflow-x-hidden">
             <MenuBar />
-            <main className="flex-grow  p-6 pb-20 md:pb-6 pt-6 md:pt-24">
+            <main className="flex-grow p-6 pb-20 md:pb-6 pt-6 md:pt-24 overflow-x-hidden">
                 {children}
             </main>
             <MobileNav />

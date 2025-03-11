@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-
-import Home from "./components/home/Home";
 import DashboardLayout from "./components/layout/DashboardLayout";
+import Home from "./pages/home/Home";
+import MetaSimulator from "./pages/home/meta-simulator/MetaSimulator";
 
 
 const App = () => {
@@ -9,6 +9,7 @@ const App = () => {
     <DashboardLayout>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/meta-simulator" element={<MetaSimulator />} />
       </Routes>
     </DashboardLayout>
   );

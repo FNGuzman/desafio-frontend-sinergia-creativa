@@ -3,6 +3,6 @@ import { CalendarDateRangeIcon, HomeIcon, SparklesIcon } from '@heroicons/react/
 
 export const NAV_LINKS = [
     { name: "Inicio", path: "/", icon: HomeIcon },
-    { name: "Simular Meta", path: "/simular-meta", icon: SparklesIcon },
+    { name: "Simular Meta", path: "/meta-simulator", icon: SparklesIcon },
     { name: "Iniciar Meta", path: "/inciar-meta", icon: CalendarDateRangeIcon },
 ];

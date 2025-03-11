@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@nivo/bar": "^0.88.0",
     "@tailwindcss/postcss": "^4.0.12",
     "heroicons": "^2.2.0",
+    "jspdf": "^3.0.0",
+    "jspdf-autotable": "^5.0.2",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
