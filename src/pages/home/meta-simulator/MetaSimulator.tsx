@@ -2,29 +2,48 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { products } from "../../../constants/products";
+
+const productos = [
+    { id: "A", nombre: "Producto A", precio: 10000, tasaCierre: 0.3 },
+    { id: "B", nombre: "Producto B", precio: 20000, tasaCierre: 0.35 },
+    { id: "C", nombre: "Producto C", precio: 30000, tasaCierre: 0.5 },
+    { id: "D", nombre: "Producto D", precio: 40000, tasaCierre: 0.5 },
+    { id: "E", nombre: "Producto E", precio: 50000, tasaCierre: 0.5 },
+];
+
+const comisiones = [
+    { id: "10", porcentaje: 0.10, label: "10%" },
+    { id: "15", porcentaje: 0.15, label: "15%" },
+    { id: "20", porcentaje: 0.20, label: "20%" },
+    { id: "35", porcentaje: 0.35, label: "35%" },
+    { id: "40", porcentaje: 0.40, label: "40%" },
+];
 
 const MetaSimulator = () => {
     const [meta, setMeta] = useState<string>("");
+    const [comisionSeleccionada, setComisionSeleccionada] = useState<number>(comisiones[0].porcentaje);
     const navigate = useNavigate();
 
     const metaValue = parseFloat(meta) || 0;
+
     const generatePDF = () => {
         const doc = new jsPDF();
         doc.text("Reporte de Simulación de Meta", 14, 20);
-        products.forEach((producto, index) => {
-            const ventasNecesarias = Math.ceil(metaValue / (producto.precio * producto.comision));
+
+        productos.forEach((producto, index) => {
+            const ventasNecesarias = Math.ceil(metaValue / (producto.precio * comisionSeleccionada));
             doc.text(
-                `${producto.nombre} - Precio: $${producto.precio.toLocaleString()} - Comisión: ${producto.comision * 100}% - Ventas Necesarias: ${ventasNecesarias}`,
+                `${producto.nombre} - Precio: $${producto.precio.toLocaleString()} - Comisión: ${(comisionSeleccionada * 100).toFixed(0)}% - Ventas Necesarias: ${ventasNecesarias}`,
                 14,
                 40 + index * 10
             );
         });
+
         autoTable(doc, {
-            startY: 40 + products.length * 10,
+            startY: 40 + productos.length * 10,
             head: [["Producto", "Prospectos", "Presentaciones / Mes", "Presentaciones / Semana"]],
-            body: products.map((producto) => {
-                const ventasNecesarias = Math.ceil(metaValue / (producto.precio * producto.comision));
+            body: productos.map((producto) => {
+                const ventasNecesarias = Math.ceil(metaValue / (producto.precio * comisionSeleccionada));
                 return [
                     producto.nombre,
                     ventasNecesarias * 5 || 0,
@@ -36,6 +55,7 @@ const MetaSimulator = () => {
 
         doc.save("Simulacion_Meta.pdf");
     };
+
     const startMeta = () => {
         navigate(`/meta-simulator?meta=${metaValue}`);
     };
@@ -55,29 +75,45 @@ const MetaSimulator = () => {
                     placeholder="Ingrese su meta en USD"
                 />
             </div>
+
+            {/* Selección de comisión */}
+            <div className="mb-4 w-full">
+                <label className="block text-sm font-semibold text-primary">Selecciona tu porcentaje de comisión</label>
+                <select
+                    value={comisionSeleccionada}
+                    onChange={(e) => setComisionSeleccionada(parseFloat(e.target.value))}
+                    className="border border-muted rounded p-2 w-full text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                    {comisiones.map((comision) => (
+                        <option key={comision.id} value={comision.porcentaje}>
+                            {comision.label}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+            {/* Muestra de cálculos */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
-                {products.map((producto) => {
-                    const ventasNecesarias = Math.ceil(metaValue / (producto.precio * producto.comision));
+                {productos.map((producto) => {
+                    const ventasNecesarias = Math.ceil(metaValue / (producto.precio * comisionSeleccionada));
 
                     return (
-                        <div
-                            key={producto.id}
-                            className="bg-white p-4 rounded-lg shadow-md text-center text-xs border border-muted w-full"
-                        >
+                        <div key={producto.id} className="bg-white p-4 rounded-lg shadow-md text-center text-xs border border-muted w-full">
                             <h2 className="text-sm font-semibold text-primary">{producto.nombre}</h2>
                             <p className="text-xs text-muted">💰 Precio: ${producto.precio.toLocaleString()}</p>
-                            <p className="text-xs text-muted">📊 Comisión: {producto.comision * 100}%</p>
+                            <p className="text-xs text-muted">📊 Comisión: {(comisionSeleccionada * 100).toFixed(0)}%</p>
                             <p className="text-lg font-bold mt-2 text-accent">{ventasNecesarias || 0} ventas</p>
                         </div>
                     );
                 })}
             </div>
+
+            {/* Plan de acción */}
             <div className="mt-6 p-4 bg-secondary shadow-md rounded-lg text-xs text-white w-full">
                 <h2 className="text-sm font-bold mb-3">📌 Tu Plan de Acción desde Hoy:</h2>
 
-                {/* Versión de tabla solo en pantallas grandes */}
-                <div className="hidden md:block overflow-x-auto rounded-lg shadow w-full">
-                    <table className="w-full border-collapse border border-muted text-center text-xs bg-white text-primary max-w-full">
+                <div className="overflow-x-auto rounded-lg shadow w-full">
+                    <table className="w-full border-collapse border border-muted text-center text-xs bg-white text-primary">
                         <thead>
                             <tr className="bg-muted text-white">
                                 <th className="p-2 border border-muted">Producto</th>
@@ -87,8 +123,8 @@ const MetaSimulator = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {products.map((producto) => {
-                                const ventasNecesarias = Math.ceil(metaValue / (producto.precio * producto.comision));
+                            {productos.map((producto) => {
+                                const ventasNecesarias = Math.ceil(metaValue / (producto.precio * comisionSeleccionada));
                                 return (
                                     <tr key={producto.id} className="bg-light">
                                         <td className="p-2 border border-muted">{producto.nombre}</td>
@@ -101,27 +137,9 @@ const MetaSimulator = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="md:hidden mt-4 w-full">
-                    {products.map((producto) => {
-                        const ventasNecesarias = Math.ceil(metaValue / (producto.precio * producto.comision));
-                        return (
-                            <div key={producto.id} className="bg-light p-3 mb-2 rounded-lg shadow-md border border-muted w-full">
-                                <button
-                                    onClick={() => { }}
-                                    className="w-full text-left font-semibold flex justify-between items-center text-primary"
-                                >
-                                    {producto.nombre}
-                                </button>
-                                <div className="mt-2 text-xs text-primary">
-                                    <p>📌 Prospectos: <strong>{ventasNecesarias * 5 || 0}</strong></p>
-                                    <p>📅 Presentaciones / Mes: <strong>{(ventasNecesarias * 0.7 || 0).toFixed(1)}</strong></p>
-                                    <p>📆 Presentaciones / Semana: <strong>{(ventasNecesarias * 0.2 || 0).toFixed(1)}</strong></p>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
             </div>
+
+            {/* Botones */}
             <div className="mt-6 flex flex-col md:flex-row gap-4">
                 <button
                     onClick={generatePDF}
