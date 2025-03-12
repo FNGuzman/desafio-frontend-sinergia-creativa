@@ -1,161 +1,140 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import Avatar from '../../../components/ui/Avatar';
+import { useState } from 'react';
+import { FaBullseye, FaChartLine, FaInfoCircle } from 'react-icons/fa'; // Íconos para el título
 
-const productos = [
-    { id: "A", nombre: "Producto A", precio: 10000, tasaCierre: 0.3 },
-    { id: "B", nombre: "Producto B", precio: 20000, tasaCierre: 0.35 },
-    { id: "C", nombre: "Producto C", precio: 30000, tasaCierre: 0.5 },
-    { id: "D", nombre: "Producto D", precio: 40000, tasaCierre: 0.5 },
-    { id: "E", nombre: "Producto E", precio: 50000, tasaCierre: 0.5 },
-];
-
-const comisiones = [
-    { id: "10", porcentaje: 0.10, label: "10%" },
-    { id: "15", porcentaje: 0.15, label: "15%" },
-    { id: "20", porcentaje: 0.20, label: "20%" },
-    { id: "35", porcentaje: 0.35, label: "35%" },
-    { id: "40", porcentaje: 0.40, label: "40%" },
-];
-
-const MetaSimulator = () => {
-    const [meta, setMeta] = useState<string>("");
-    const [comisionSeleccionada, setComisionSeleccionada] = useState<number>(comisiones[0].porcentaje);
-    const navigate = useNavigate();
-
-    const metaValue = parseFloat(meta) || 0;
-
-    const generatePDF = () => {
-        const doc = new jsPDF();
-        doc.text("Reporte de Simulación de Meta", 14, 20);
-
-        productos.forEach((producto, index) => {
-            const ventasNecesarias = Math.ceil(metaValue / (producto.precio * comisionSeleccionada));
-            doc.text(
-                `${producto.nombre} - Precio: $${producto.precio.toLocaleString()} - Comisión: ${(comisionSeleccionada * 100).toFixed(0)}% - Ventas Necesarias: ${ventasNecesarias}`,
-                14,
-                40 + index * 10
-            );
-        });
-
-        autoTable(doc, {
-            startY: 40 + productos.length * 10,
-            head: [["Producto", "Prospectos", "Presentaciones / Mes", "Presentaciones / Semana"]],
-            body: productos.map((producto) => {
-                const ventasNecesarias = Math.ceil(metaValue / (producto.precio * comisionSeleccionada));
-                return [
-                    producto.nombre,
-                    ventasNecesarias * 5 || 0,
-                    (ventasNecesarias * 0.7 || 0).toFixed(1),
-                    (ventasNecesarias * 0.2 || 0).toFixed(1),
-                ];
-            }),
-        });
-
-        doc.save("Simulacion_Meta.pdf");
-    };
-
-    const startMeta = () => {
-        navigate(`/meta-simulator?meta=${metaValue}`);
-    };
-
+export default function SimuladorMetas() {
+    const [objetivo, setObjetivo] = useState<number | string>("");
+    const balance = 14463;
+    const mes = "Febrero";
+    const ticketPromedio = 1100;
+    const valorUSD = 1055;
+    const ventaObjetivo = 3103650;
+    const volumenCarrera = 2942;
+    const totalVentas = 3;
+    const fechaHoy = new Date().toLocaleDateString(); // Obtiene la fecha actual
+    const datosAccion = [
+        { titulo: "Nuevos Datos a Prospectar", valor: 16, color: "bg-[var(--color-primary)]" },
+        { titulo: "Mínimo Presentaciones x Mes", valor: 5, color: "bg-[var(--color-secondary)]" },
+        { titulo: "Mínimo Presentaciones x Sem.", valor: 2, color: "bg-[var(--color-accent)]" }
+    ];
     return (
-        <div className="w-full max-w-full mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4 text-primary">Simulador de Meta</h1>
-
-            {/* Entrada de cuánto quieres ganar */}
-            <div className="mb-4 w-full">
-                <label className="block text-sm font-semibold text-primary">¿Cuánto quieres ganar?</label>
-                <input
-                    type="text"
-                    value={meta}
-                    onChange={(e) => setMeta(e.target.value)}
-                    className="border border-muted rounded p-2 w-full text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent"
-                    placeholder="Ingrese su meta en USD"
-                />
-            </div>
-
-            {/* Selección de comisión */}
-            <div className="mb-4 w-full">
-                <label className="block text-sm font-semibold text-primary">Selecciona tu porcentaje de comisión</label>
-                <select
-                    value={comisionSeleccionada}
-                    onChange={(e) => setComisionSeleccionada(parseFloat(e.target.value))}
-                    className="border border-muted rounded p-2 w-full text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent"
-                >
-                    {comisiones.map((comision) => (
-                        <option key={comision.id} value={comision.porcentaje}>
-                            {comision.label}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            {/* Muestra de cálculos */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
-                {productos.map((producto) => {
-                    const ventasNecesarias = Math.ceil(metaValue / (producto.precio * comisionSeleccionada));
-
-                    return (
-                        <div key={producto.id} className="bg-white p-4 rounded-lg shadow-md text-center text-xs border border-muted w-full">
-                            <h2 className="text-sm font-semibold text-primary">{producto.nombre}</h2>
-                            <p className="text-xs text-muted">💰 Precio: ${producto.precio.toLocaleString()}</p>
-                            <p className="text-xs text-muted">📊 Comisión: {(comisionSeleccionada * 100).toFixed(0)}%</p>
-                            <p className="text-lg font-bold mt-2 text-accent">{ventasNecesarias || 0} ventas</p>
-                        </div>
-                    );
-                })}
-            </div>
-
-            {/* Plan de acción */}
-            <div className="mt-6 p-4 bg-secondary shadow-md rounded-lg text-xs text-white w-full">
-                <h2 className="text-sm font-bold mb-3">📌 Tu Plan de Acción desde Hoy:</h2>
-
-                <div className="overflow-x-auto rounded-lg shadow w-full">
-                    <table className="w-full border-collapse border border-muted text-center text-xs bg-white text-primary">
-                        <thead>
-                            <tr className="bg-muted text-white">
-                                <th className="p-2 border border-muted">Producto</th>
-                                <th className="p-2 border border-muted">Prospectos</th>
-                                <th className="p-2 border border-muted">Presentaciones / Mes</th>
-                                <th className="p-2 border border-muted">Presentaciones / Semana</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {productos.map((producto) => {
-                                const ventasNecesarias = Math.ceil(metaValue / (producto.precio * comisionSeleccionada));
-                                return (
-                                    <tr key={producto.id} className="bg-light">
-                                        <td className="p-2 border border-muted">{producto.nombre}</td>
-                                        <td className="p-2 border border-muted">{ventasNecesarias * 5 || 0}</td>
-                                        <td className="p-2 border border-muted">{(ventasNecesarias * 0.7 || 0).toFixed(1)}</td>
-                                        <td className="p-2 border border-muted">{(ventasNecesarias * 0.2 || 0).toFixed(1)}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+        <div className="p-1">
+            <div className="bg-[linear-gradient(to_right,var(--color-primary),var(--color-secondary))] rounded-2xl text-white p-5">
+                <div className="flex items-center space-x-3 mt-4">
+                    <Avatar size={12} alt="Guzmán Fernando Nahuel" />
+                    <div>
+                        <p className="text-sm text-gray-300 flex items-center gap-1">
+                            Bienvenido <span>👋</span>
+                        </p>
+                        <h1 className="text-lg font-bold">Guzmán Fernando Nahuel</h1>
+                    </div>
+                </div>
+                <div className="mt-6 p-4 shadow-md rounded-lg text-xs text-white w-full text-center">
+                    <p className="text-sm">Tu Ganancia Neta Hoy</p>
+                    <h2 className="text-4xl font-bold">${balance.toLocaleString()}</h2>
+                </div>
+                <div className="mt-4 bg-white/10 p-3 rounded-lg text-center text-sm grid grid-cols-3 gap-2">
+                    <div>
+                        <p className="text-gray-300">Mes</p>
+                        <p className="font-semibold">{mes}</p>
+                    </div>
+                    <div>
+                        <p className="text-gray-300">Mi Ticket Promedio</p>
+                        <p className="font-semibold">${ticketPromedio}</p>
+                    </div>
+                    <div>
+                        <p className="text-gray-300">Valor USD</p>
+                        <p className="font-semibold">${valorUSD}</p>
+                    </div>
                 </div>
             </div>
-
-            {/* Botones */}
-            <div className="mt-6 flex flex-col md:flex-row gap-4">
-                <button
-                    onClick={generatePDF}
-                    className="w-full md:w-auto px-4 py-2 text-white bg-accent rounded shadow hover:bg-muted transition"
-                >
-                    📄 Descargar PDF
-                </button>
-                <button
-                    onClick={startMeta}
-                    className="w-full md:w-auto px-4 py-2 text-white bg-secondary rounded shadow hover:bg-primary transition"
-                >
-                    🚀 Iniciar Meta
-                </button>
+            <div className="grid grid-cols-2 gap-3 p-3">
+                <div className="w-full">
+                    <label className="text-sm font-semibold text-gray-700 block">Comisión Actual</label>
+                    <select className="bg-gray-200 p-2 rounded-lg text-sm outline-none w-full">
+                        <option>Seleccionar</option>
+                        <option>10%</option>
+                        <option>15%</option>
+                        <option>35%</option>
+                        <option>40%</option>
+                        <option>45%</option>
+                    </select>
+                </div>
+                <div className="w-full">
+                    <label className="text-sm font-semibold text-gray-700 block">Producto</label>
+                    <select className="bg-gray-200 p-2 rounded-lg text-sm outline-none w-full">
+                        <option>Seleccionar</option>
+                        <option>Producto</option>
+                        <option>Producto A</option>
+                        <option>Producto B</option>
+                        <option>Producto E</option>
+                    </select>
+                </div>
+            </div>
+            <div className="p-3">
+                <label className="text-sm font-semibold text-gray-700 block">
+                    ¿Cuánto quiero ganar este mes en mi Venta Personal?
+                </label>
+                <input
+                    type="number"
+                    value={objetivo}
+                    onChange={(e) => setObjetivo(e.target.value)}
+                    className="bg-gray-200 p-2 rounded-lg text-sm outline-none w-full mt-1 text-right font-semibold"
+                    placeholder="Ingrese su objetivo en $"
+                />
+            </div>
+            <div className="p-3">
+                <div className="bg-white shadow-lg rounded-lg p-5 min-h-28">
+                    <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                            <FaChartLine className="text-blue-500 text-xl" />
+                            <h3 className="text-md font-semibold text-gray-700">Resumen de Ventas</h3>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-3 text-center">
+                        <div className="flex flex-col justify-between">
+                            <p className="text-gray-400 text-sm h-6 flex items-center justify-center">
+                                Tengo que vender
+                            </p>
+                            <h2 className="text-lg font-bold">${ventaObjetivo.toLocaleString()}</h2>
+                        </div>
+                        <div className="flex flex-col justify-between">
+                            <p className="text-gray-400 text-sm h-6 flex items-center justify-center">
+                                Volumen Carrera
+                            </p>
+                            <h2 className="text-lg font-bold">{volumenCarrera.toLocaleString()} USD</h2>
+                        </div>
+                        <div className="flex flex-col justify-between">
+                            <p className="text-gray-400 text-sm h-6 flex items-center justify-center">
+                                Total Ventas
+                            </p>
+                            <h2 className="text-lg font-bold">{totalVentas}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="p-3">
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                        <FaBullseye className="text-red-500 text-2xl" />
+                        TU PLAN DE ACCIÓN desde HOY :
+                    </h2>
+                    <span className="text-gray-600 text-sm">{fechaHoy}</span>
+                </div>
+                <div className="overflow-x-auto p-1">
+                    <div className="grid grid-cols-3 gap-3 min-w-[380px]">
+                        {datosAccion.map((item, index) => (
+                            <div
+                                key={index}
+                                className={`bg-gradient-to-r ${item.color} text-white p-5 rounded-lg shadow-md flex flex-col justify-between min-w-[120px]`}
+                            >
+                                <p className="text-sm">{item.titulo}</p>
+                                <h2 className="text-2xl font-bold">{item.valor}</h2>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );
-};
-
-export default MetaSimulator;
+}
