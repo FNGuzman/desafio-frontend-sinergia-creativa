@@ -1,0 +1,188 @@
+[
+    {
+        "id": 1,
+        "anio": 2023,
+        "meses": [
+            {
+                "id": 1,
+                "nombre": "enero",
+                "diaInicio": 5,
+                "resumenVentas": {
+                    "montoAVender": 45000
+                },
+                "ventas": [
+                    {
+                        "dia": 5,
+                        "productoId": "A",
+                        "monto": 10000,
+                        "comisionPorcentaje": 0.10,
+                        "comisionReal": "10%",
+                        "comisionGanada": 1000
+                    },
+                    {
+                        "dia": 10,
+                        "productoId": "B",
+                        "monto": 20000,
+                        "comisionPorcentaje": 0.15,
+                        "comisionReal": "15%",
+                        "comisionGanada": 3000
+                    }
+                ],
+                "totalGanado": 30000,
+                "prospectos": 40
+            },
+            {
+                "id": 2,
+                "nombre": "febrero",
+                "diaInicio": 8,
+                "resumenVentas": {
+                    "montoAVender": 60000
+                },
+                "ventas": [
+                    {
+                        "dia": 12,
+                        "productoId": "C",
+                        "monto": 25000,
+                        "comisionPorcentaje": 0.20,
+                        "comisionReal": "20%",
+                        "comisionGanada": 5000
+                    },
+                    {
+                        "dia": 20,
+                        "productoId": "D",
+                        "monto": 30000,
+                        "comisionPorcentaje": 0.35,
+                        "comisionReal": "35%",
+                        "comisionGanada": 10500
+                    }
+                ],
+                "totalGanado": 62000,
+                "prospectos": 55
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "anio": 2024,
+        "meses": [
+            {
+                "id": 1,
+                "nombre": "enero",
+                "diaInicio": 10,
+                "resumenVentas": {
+                    "montoAVender": 50000
+                },
+                "ventas": [
+                    {
+                        "dia": 6,
+                        "productoId": "E",
+                        "monto": 25000,
+                        "comisionPorcentaje": 0.40,
+                        "comisionReal": "40%",
+                        "comisionGanada": 10000
+                    },
+                    {
+                        "dia": 15,
+                        "productoId": "F",
+                        "monto": 20000,
+                        "comisionPorcentaje": 0.15,
+                        "comisionReal": "15%",
+                        "comisionGanada": 3000
+                    }
+                ],
+                "totalGanado": 48000,
+                "prospectos": 45
+            },
+            {
+                "id": 2,
+                "nombre": "febrero",
+                "diaInicio": 9,
+                "resumenVentas": {
+                    "montoAVender": 70000
+                },
+                "ventas": [
+                    {
+                        "dia": 8,
+                        "productoId": "J",
+                        "monto": 30000,
+                        "comisionPorcentaje": 0.10,
+                        "comisionReal": "10%",
+                        "comisionGanada": 3000
+                    },
+                    {
+                        "dia": 22,
+                        "productoId": "H",
+                        "monto": 35000,
+                        "comisionPorcentaje": 0.35,
+                        "comisionReal": "35%",
+                        "comisionGanada": 12250
+                    }
+                ],
+                "totalGanado": 71000,
+                "prospectos": 50
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "anio": 2025,
+        "meses": [
+            {
+                "id": 1,
+                "nombre": "enero",
+                "diaInicio": 10,
+                "resumenVentas": {
+                    "montoAVender": 60000
+                },
+                "ventas": [
+                    {
+                        "dia": 3,
+                        "productoId": "A",
+                        "monto": 20000,
+                        "comisionPorcentaje": 0.10,
+                        "comisionReal": "10%",
+                        "comisionGanada": 2000
+                    },
+                    {
+                        "dia": 14,
+                        "productoId": "C",
+                        "monto": 25000,
+                        "comisionPorcentaje": 0.20,
+                        "comisionReal": "20%",
+                        "comisionGanada": 5000
+                    }
+                ],
+                "totalGanado": 62000,
+                "prospectos": 50
+            },
+            {
+                "id": 2,
+                "nombre": "febrero",
+                "diaInicio": 9,
+                "resumenVentas": {
+                    "montoAVender": 75000
+                },
+                "ventas": [
+                    {
+                        "dia": 5,
+                        "productoId": "J",
+                        "monto": 30000,
+                        "comisionPorcentaje": 0.10,
+                        "comisionReal": "10%",
+                        "comisionGanada": 3000
+                    },
+                    {
+                        "dia": 19,
+                        "productoId": "H",
+                        "monto": 35000,
+                        "comisionPorcentaje": 0.35,
+                        "comisionReal": "35%",
+                        "comisionGanada": 12250
+                    }
+                ],
+                "totalGanado": 73000,
+                "prospectos": 55
+            }
+        ]
+    }
+]

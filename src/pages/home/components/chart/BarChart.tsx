@@ -126,7 +126,6 @@ const BarChart = () => {
                 borderRadius={5}
                 axisTop={null}
                 axisRight={null}
-
                 labelSkipWidth={12}
                 labelSkipHeight={12}
                 labelTextColor={{
