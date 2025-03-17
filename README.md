@@ -1,54 +1,64 @@
-# React + TypeScript + Vite
+# 🚀 Desafío Frontend - Sinergia Creativa
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este es un proyecto frontend construido con **React**, **TypeScript** y **Vite**, utilizando **TailwindCSS** para el diseño y **React Router** para la navegación.
 
-Currently, two official plugins are available:
+## 📌 Tecnologías Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ⚛️ **React 19**
+- 🔹 **TypeScript**
+- ⚡ **Vite**
+- 🎨 **TailwindCSS**
+- 🚏 **React Router DOM**
+- 🔍 **ESLint** (con reglas para TypeScript y React)
+- 📊 **@nivo/bar** (para gráficos)
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📂 Estructura del Proyecto
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+📦 desafio-frontend-sinergia-creativa ├── 📁 src │ ├── 📁 components # Componentes reutilizables │ ├── 📁 context # Contexto de React (Simulador) │ ├── 📁 hooks # Custom hooks │ ├── 📁 pages # Páginas principales │ ├── 📁 constants # Datos estáticos │ ├── 📁 styles # Configuración de estilos (Tailwind) │ ├── 📄 main.tsx # Entrada principal del proyecto │ └── 📄 App.tsx # Componente principal ├── 📄 index.html # Página raíz del proyecto ├── 📄 package.json # Dependencias y scripts del proyecto ├── 📄 tailwind.config.js # Configuración de TailwindCSS ├── 📄 tsconfig.json # Configuración de TypeScript ├── 📄 vite.config.ts # Configuración de Vite └── 📄 README.md # Este
+
+# 🚀 Instalación y Configuración
+
+### Clonar el repositorio
+```sh
+git clone https://github.com/tu-usuario/desafio-frontend-sinergia.git
+cd desafio-frontend-sinergia-creativa
+```
+### Instalar dependencias
+```sh
+npm install
+```
+### Ejecutar en modo desarrollo
+```sh
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Construir para producción
+```sh
+npm run build
 ```
+
+### 📜 Funcionalidades Principales
+### ✔ Simulador de comisiones: Selecciona un producto y una comisión para calcular la ganancia.
+### ✔ Registro de ventas: Guarda ventas en el localStorage.
+### ✔ Gráficos de desempeño: Muestra el rendimiento por día con @nivo/bar.
+### ✔ Interfaz responsiva con TailwindCSS.
+### ✔ Código optimizado con ESLint y TypeScript.
+
+### 🔍 Configuración Adicional
+### 🔹 Linter (ESLint)
+### Para ejecutar el linter y verificar errores de código:
+```sh
+npm run lint
+```
+
+### 📌 Scripts Disponibles
+### npm run dev → Inicia el entorno de desarrollo con Vite.
+### npm run build → Construye el proyecto para producción.
+### npm run preview → Vista previa de la versión de producción.
+### npm run lint → Ejecuta ESLint para revisar errores de código.
+
+
+###  Autor y Contribuciones
+### Creado por Guzmán Fernando Nahuel.
+
