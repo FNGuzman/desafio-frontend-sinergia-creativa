@@ -24,7 +24,12 @@ const App = () => {
           }
         />
         <Route path="/metas" element={<Metas />} />
-        <Route path="/ver-mes/:anio/:mesId" element={<VerMes />} />
+        <Route path="/ver-mes/:anio/:mesId" element={
+          <SimuladorProvider>
+            <VerMes />
+          </SimuladorProvider>
+        } />
+
         <Route path="/iniciar-meta" element={<IniciarMeta />} />
       </Routes>
     </DashboardLayout>

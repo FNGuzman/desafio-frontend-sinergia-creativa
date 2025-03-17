@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import metasData from "../../data/metas.json";
-
-import MesCard from "./components/MesCard"; // Nuevo componente para tarjetas de mes
+import MesCard from "./components/MesCard";
 import { guardarMetas, obtenerMetas } from "../../hooks/metasStorage";
 
 interface Venta {
@@ -58,8 +57,6 @@ const Metas = () => {
     return (
         <div className="p-4">
             <h1 className="text-xl font-bold mb-4">Metas de Ventas</h1>
-
-            {/* Selector de Año */}
             <div className="mb-4">
                 <label className="text-sm font-semibold">Seleccionar Año</label>
                 <select

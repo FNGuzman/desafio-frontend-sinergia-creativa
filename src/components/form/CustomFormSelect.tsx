@@ -23,7 +23,6 @@ const CustomFormSelect = ({ options, onSelect, placeholder = "Seleccione una Opc
 
     return (
         <div className="relative w-full max-w-[180px] sm:max-w-[220px] lg:max-w-[250px]">
-            {/* Botón principal */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="w-full flex justify-between items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-full shadow-sm hover:bg-gray-200 transition"
@@ -41,8 +40,6 @@ const CustomFormSelect = ({ options, onSelect, placeholder = "Seleccione una Opc
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
             </button>
-
-            {/* Menú desplegable */}
             {isOpen && (
                 <div className="absolute top-full left-0 mt-2 w-full bg-white shadow-lg rounded-md z-10">
                     <ul className="py-2">
