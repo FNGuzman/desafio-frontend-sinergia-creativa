@@ -5,32 +5,9 @@ import Header from "../meta-simulator/components/Header";
 import { useSimuladorContext } from "../../context/SimuladorContext";
 import { comisiones, productos } from "../../constants/products";
 import toast from "react-hot-toast";
+import { Mes, Meta, Venta } from "../../interfaces/simulatorInterfaces";
 
-interface Venta {
-    id: number;
-    dia: number;
-    producto: string;
-    comision: number;
-    monto: number;
-    comisionGanada: number;
-    productoId?: number;
-    comisionPorcentaje?: number;
-}
 
-interface Mes {
-    id: number;
-    nombre: string;
-    resumenVentas: {
-        montoAVender: number;
-    };
-    ventas: Venta[];
-}
-
-interface Meta {
-    id: number;
-    anio: number;
-    meses: Mes[];
-}
 
 const VerMes = () => {
     const { anio, mesId } = useParams();

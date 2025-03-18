@@ -6,6 +6,7 @@ interface HeaderProps {
     gananciaNeta: number;
     mes: string;
     ticketPromedio: number;
+    setTicketPromedio?: React.Dispatch<React.SetStateAction<number>>;
     valorUSD: number;
     productoSeleccionado: string;
     setProductoSeleccionado: (value: string) => void;
@@ -13,20 +14,23 @@ interface HeaderProps {
     setComisionSeleccionada: (value: number) => void;
     productos: { nombre: string }[];
     comisiones: { porcentaje: number; label: string }[];
+    labelGanancia?: string;
 }
 
 const Header = ({
     nivelVendedor,
     gananciaNeta,
     mes,
-    ticketPromedio,
+    ticketPromedio = 0,
     valorUSD,
     productoSeleccionado,
     setProductoSeleccionado,
     comisionSeleccionada,
     setComisionSeleccionada,
     productos,
-    comisiones
+    comisiones,
+    setTicketPromedio,
+    labelGanancia = 'Ganancias'
 }: HeaderProps) => {
     return (
         <div className="bg-[linear-gradient(to_right,var(--color-primary),var(--color-secondary))] rounded-2xl text-white p-5">
@@ -44,7 +48,18 @@ const Header = ({
                 <p className="text-gray-300 font-medium text-xs">Mi Ticket Promedio</p>
                 <p className="text-gray-300 font-medium text-xs">Valor USD</p>
                 <p className="font-semibold capitalize">{mes}</p>
-                <p className="font-semibold">${ticketPromedio.toLocaleString("es-ES")}</p>
+                <input
+                    type="text"
+                    className="font-semibold bg-transparent text-center outline-none focus:ring-0"
+                    value={ticketPromedio.toLocaleString("es-ES")}
+                    onChange={(e) => {
+                        const value = parseFloat(e.target.value.replace(/\D/g, "")) || 0;
+                        if (setTicketPromedio) setTicketPromedio(value);
+                    }}
+                    onBlur={(e) => {
+                        if (!e.target.value && setTicketPromedio) setTicketPromedio(1500);
+                    }}
+                />
                 <p className="font-semibold">${valorUSD.toLocaleString("es-ES")}</p>
             </div>
             <div className="grid grid-cols-2 gap-3 mt-4">
@@ -68,7 +83,7 @@ const Header = ({
                 />
             </div>
             <div className="mt-6 p-4 shadow-md rounded-lg text-xs text-white w-full text-center bg-white/10">
-                <p className="text-sm">Tu Ganancia Neta Hoy</p>
+                <p className="text-sm">{labelGanancia}</p>
                 <h2 className="text-4xl font-bold">${gananciaNeta.toLocaleString("es-ES")}</h2>
             </div>
         </div>

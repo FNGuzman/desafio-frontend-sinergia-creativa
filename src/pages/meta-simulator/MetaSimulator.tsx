@@ -16,7 +16,7 @@ const MetaSimulator = () => {
         setComisionSeleccionada,
         valorUSD,
         loading,
-        simuladorData: { montoAVender, volumenCarrera, totalVentas, gananciaNeta, datosAccion, nivelVendedor, ticketPromedio, mes }
+        simuladorData: { montoAVender, volumenCarrera, totalVentas, gananciaNeta, datosAccion, nivelVendedor, ticketPromedio, mes, setTicketPromedio }
     } = useSimuladorContext();
 
     return (
@@ -37,6 +37,8 @@ const MetaSimulator = () => {
                         setComisionSeleccionada={setComisionSeleccionada}
                         productos={productos}
                         comisiones={comisiones}
+                        setTicketPromedio={setTicketPromedio}
+                        labelGanancia={'Tu Ganancia Neta Hoy'}
                     />
 
                     <div className="p-3">

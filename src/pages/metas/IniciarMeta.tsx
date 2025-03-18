@@ -2,35 +2,11 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import metasData from "../../data/metas.json";
+import { MesIniciar, MetaIniciar } from "../../interfaces/simulatorInterfaces";
 
-interface Venta {
-    productoId: string;
-    monto: number;
-    comisionPorcentaje: number;
-    comisionReal: string;
-    comisionGanada: number;
-}
-
-interface Mes {
-    id: number;
-    nombre: string;
-    diaInicio?: number;
-    resumenVentas: {
-        montoAVender: number;
-    };
-    ventas: Venta[];
-    totalGanado: number;
-    prospectos: number;
-}
-
-interface Meta {
-    id: number;
-    anio: number;
-    meses: Mes[];
-}
 
 const IniciarMeta = () => {
-    const [metas, setMetas] = useState<Meta[]>([]);
+    const [metas, setMetas] = useState<MetaIniciar[]>([]);
     const [montoAVender, setMontoAVender] = useState<number | "">("");
     const navigate = useNavigate();
     const anioActual = new Date().getFullYear();
@@ -53,7 +29,7 @@ const IniciarMeta = () => {
             return;
         }
 
-        const nuevaMeta: Mes = {
+        const nuevaMeta: MesIniciar = {
             id: mesActual,
             nombre: nombreMes,
             diaInicio: diaHoy,
